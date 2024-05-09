@@ -8,8 +8,11 @@ import userRoutes from './routes/userRoutes.js';
 connectDB();
 const port = process.env.PORT || 5000;
 
-// middlewares 
 const app = express();
+
+// middlewares 
+app.use(express.json()); // Parses incoming requests with JSON payloads.
+app.use(express.urlencoded({ extended: true })); // Parses incoming requests with URL-encoded payloads, including nested objects.
 
 // End points
 app.use('/api/users', userRoutes);
