@@ -1,17 +1,18 @@
-import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { Form, Button, Row, Col } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import FormContainer from "../components/FormContainer";
-import { useLoginMutation } from "../slices/usersApiSlice";
-import { setCredentials } from "../slices/authSlice";
+import { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Form, Button, Row, Col } from 'react-bootstrap';
+import FormContainer from '../components/FormContainer';
+import { useDispatch, useSelector } from 'react-redux';
+import { useLoginMutation } from '../slices/usersApiSlice';
+import { setCredentials } from '../slices/authSlice';
+import { toast } from 'react-toastify';
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [login,  { isLoading }] = useLoginMutation();
 
@@ -19,18 +20,18 @@ const LoginScreen = () => {
 
   useEffect(() => {
     if (userInfo) {
-      navigate("/");
+      navigate('/');
     }
-  }, [navigate, userInfo])
+  }, [navigate, userInfo]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
       const res = await login({ email, password }).unwrap();
-      dispatch(setCredentials(...res));
-      navigate('/')
+      dispatch(setCredentials({ ...res }));
+      navigate('/');
     } catch (err) {
-      console.log(err?.data?.message || err.error);
+      toast.error(err?.data?.message || err.error);
     }
   };
 
