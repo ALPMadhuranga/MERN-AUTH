@@ -1,4 +1,4 @@
-# School Management System
+# MERN Auth
 This is a MERN Auth application created using MERN stack and REDUX Toolkit.
 
 ### Technologies Used
